@@ -1,0 +1,21 @@
+<th:block th:fragment="header">
+    <header>
+        <div class="logoGrande">
+            <a href="./bienvenida"><img src="imgalvaro/logoNombre.jpg" alt=""/></a>    
+        </div>
+        <div class="sesion">
+            <div class="btn-sesion"> 
+                <ul th:if="${nombreUsuario != null}" >
+                    <li id="nombre">
+                        <a th:text="${nombreUsuario}"  th:if="${nombreUsuario != null}" class="ingreso" href="#"></a>    
+                        <a id="salir" href="./salir">SALIR</a>
+                    </li>
+                </ul>
+                <a th:if="${nombreUsuario == null}" class="ingreso" href="./inicio">Mi cuenta</a>
+            </div>
+            <div class="carrito">
+                <a th:text="${items}" th:if="${items != null}" href="./carrito"></a>
+            </div>
+        </div>
+    </header>
+</th:block>

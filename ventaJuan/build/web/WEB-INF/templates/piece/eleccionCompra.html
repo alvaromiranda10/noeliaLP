@@ -1,0 +1,53 @@
+<th:block th:fragment="eleccionCompra">
+
+    <p class="nombreProducto" th:text="${producto.nombre}"></p>
+    <p class="precioProducto" th:text="'$' +${producto.precio}"></p>
+    <div class="eleccion">
+        <div class="menuColor">
+            <label>COLOR:</label>
+            <ul class="colores">
+                <th:block th:each="otros: ${producto.otrosColores}">
+                    <li>
+                        <input class="otros" name="colores" th:value="${otros.color}" type="radio" th:id="${otros.color}"/>
+                        <label th:data-stock="${otros.talleS}+','+${otros.talleM}+','+${otros.talleL}+','+${otros.talleXL}" th:for="${otros.color}" class="red" th:style="'background:'+${otros.color}+';'" onclick="cambiarFoto(this)"></label>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+        <div class="menuTalles">
+            <label>TALLES:</label>
+            <ul class="talles">
+                <th:block th:each="otros,clave: ${producto.otrosColores}" th:if="${clave.index}<1 ">
+                    <li>
+                        <input name="talles" type="radio" id="S" value="S" />
+                        <label for="S" th:onclick="'habilitarCantidad('+${otros.talleS}+')'">S</label>
+                    </li>
+                    <li>
+                        <input name="talles" type="radio" id="M" value="M"/>
+                        <label for="M" th:onclick="'habilitarCantidad('+${otros.talleM}+')'">M</label>
+                    </li>
+                    <li>
+                        <input name="talles" type="radio" id="L" value="L"/>
+                        <label for="L" th:onclick="'habilitarCantidad('+${otros.talleL}+')'">L</label>
+                    </li>
+                    <li>
+                        <input name="talles" type="radio" id="XL" value="XL"/>
+                        <label for="XL" th:onclick="'habilitarCantidad('+${otros.talleXL}+')'">XL</label>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+        <div class="cantidad">
+            <label>CANTIDAD:</label>
+            <select name="cantidad" required>
+                <option selected disabled>0</option>
+            </select>
+        </div>
+    </div>
+    <input type="hidden" name="idProducto"/>
+    <input type="button"  value="Agregar al carrito" class="btn btn-black" onclick="comprar()"/>
+    <div class="descripcionProducto">
+        <h3>Descripcion </h3>
+        <p th:text="${producto.descripcion}"></p>
+    </div>
+</th:block>

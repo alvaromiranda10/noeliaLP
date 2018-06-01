@@ -1,0 +1,75 @@
+<th:block th:fragment="nav">
+    <nav>
+        <div class="hamburger">
+            <div class="_layer -top"></div>
+            <div class="_layer -mid"></div>
+            <div class="_layer -bottom"></div>
+        </div>	
+        <ul class="menu menuMobile">
+            <li class="childSubMenu">
+                <a href ="./moda">MODA</a>
+                <div class="submenu submenuMobile">
+                    <ul>
+                        <li>
+                            <a href="./moda?categoria=vestido">VESTIDOS</a>
+                        </li>
+                        <li>
+                            <a href="./moda?categoria=falda">FALDAS</a>
+                        </li>
+                        <li>
+                            <a href="./moda?categoria=blusa">BLUSAS</a>
+                        </li>
+                        <li>
+                            <a href="./moda?categoria=camisa">CAMISAS</a>
+                        </li>
+                        <li>
+                            <a href="./moda?categoria=campera">CAMPERAS</a>
+                        </li>
+                    </ul>
+                    <p class="info">PUBLICIDAD</p>
+                </div>
+                <span class="down"></span>
+            </li>
+            <li class="childSubMenu">
+                <a href="./mininoe">MINI NOE</a>
+                <div class="submenu submenuMobile">
+                    <ul>
+                        <li>
+                            <a href="./mininoe?categoria=miniVestido">VESTIDOS</a>
+                        </li>
+                        <li>
+                            <a href="./mininoe?categoria=miniFalda">FALDAS</a>
+                        </li>
+                        <li>
+                            <a href="./mininoe?categoria=miniBlusa">BLUSAS</a>
+                        </li>
+                    </ul>
+                    <p class="info">PUBLICIDAD 2</p>
+                </div>
+                <span class="down"></span>
+            </li>
+            <li>
+                <a href="novedades.html">NOVEDADES</a>
+            </li>
+            <li>
+                <a href="historia.html">HISTORIA</a>
+            </li>
+            <li>
+                <a href="liquidacion.html">LIQUIDACION</a>
+            </li>
+            <li>
+                <a href="sesionFotos.html">SESION DE FOTOS</a>
+            </li>
+            <li th:if="${nombreUsuario == null}" data-ingresar="ingresar">
+                <a href="./inicio" style="border-bottom:  0px;"><span class="icon icon-enter"></span> INGRESAR o REGISTRARSE</a>
+            </li>
+            <li th:if="${nombreUsuario != null}" data-salir="salir" >
+                <a href="./salir" style="border-bottom:  0px;"><span class="icon icon-exit"></span> SALIR</a>
+            </li>
+            <li th:if="${nombreUsuario != null}" data-usuario="usuario" >
+                <a  th:text="${nombreUsuario}" href="#" class="icon icon-user" style="border-bottom:  0px;"></a>           
+            </li>
+        </ul>
+    </nav>
+
+</th:block>

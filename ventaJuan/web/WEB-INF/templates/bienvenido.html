@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Bienvenida</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=1"/>
+        <link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>   
+        <link href="css/flexAlvaro.css" rel="stylesheet" type="text/css"/>
+        <link href="css/general.css" rel="stylesheet" type="text/css"/>
+        <link href="css/index.css" rel="stylesheet" type="text/css"/>
+        <link href="css/font/icon.css" rel="stylesheet" type="text/css"/>
+        <style>
+            @media(max-width:767px){
+                section .publicidad img{
+                    height: calc(100vw/2);
+                }
+            }
+
+            @media(max-width: 1023px) and (min-width:768px){
+                section .publicidad img{
+                    height: calc(100vw/2.8);
+                }
+            }
+
+            @media(min-width:1024px){
+                section .publicidad img{
+                    height: calc(100vw/2.5);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="contenedor">
+
+            <th:block th:include="piece/header::header">
+            </th:block>
+            <th:block th:include="piece/nav::nav">
+            </th:block> 
+            <section>
+                <div class="publicidad swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="imagenesLucio/publicidad/Produccion NoeliaLP20183.jpg" alt=""/>
+                        </div> 
+                        <div class="swiper-slide">
+                            <img src="imagenesLucio/publicidad/Produccion NoeliaLP20184.jpg" alt=""/>
+                        </div> 
+                        <div class="swiper-slide">
+                            <img src="imagenesLucio/publicidad/Produccion NoeliaLP20185.jpg" alt=""/>
+                        </div> 
+                        <div class="swiper-slide">
+                            <img src="imagenesLucio/publicidad/ecocuero.jpg" alt=""/>
+                        </div> 
+                        <div class="swiper-slide">
+                            <img src="imagenesLucio/publicidad/look book 2018.jpg" alt=""/>
+                        </div> 
+                        <div class="swiper-slide">
+                            <img src="imagenesLucio/publicidad/look book 20181.jpg" alt=""/>
+                        </div> 
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <h2 style="text-align: center; padding: 20px 0px; font-weight: bold;">En contruccion publicidades: </h2>
+                <img src="imagenesLucio/publicidad/Produccion NoeliaLP20183.jpg" alt=""/>
+                <img src="imagenesLucio/publicidad/look book 20181.jpg" alt=""/>
+
+            </section>
+
+            <th:block th:include="piece/footer::footer">
+            </th:block>
+
+        </div>
+        <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="js/swiper.min.js" type="text/javascript"></script>
+        <script src="js/general.js" type="text/javascript"></script>
+        <script>
+            window.addEventListener("load", function () {
+                if (sessionStorage.getItem('saludo') !== null) {
+                    console.log("funciona");
+                } else {
+                    sessionStorage.setItem('saludo', "ingreso");
+                    alert("Bievenido a la pagina de Noelia LP. Recordarle que el siguiente sistema posee algunos datos de prueba. Para VER datos de prueba en la pagina de carrito debera ingresar con el usuario 'Lucio' y la contraseña '1234'. Disculpe por las molestias");
+                }
+            }, false);
+            $(document).ready(function () {
+
+                new Swiper('.publicidad', {
+                    spaceBetween: 30,
+                    centeredSlides: true,
+                    autoplay: {
+                        delay: 3500,
+                        disableOnInteraction: false
+                    },
+                    pagination: {
+                        el: '.publicidad .swiper-pagination',
+                        clickable: true
+                    }
+                });
+
+            });
+        </script>
+    </body>
+</html>
