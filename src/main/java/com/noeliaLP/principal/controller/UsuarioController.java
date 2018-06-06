@@ -32,6 +32,11 @@ public class UsuarioController {
     @Qualifier("Cliente")
     private Cliente clmodel;
 
+    @GetMapping("/")
+    public String inicio(){
+        return "redirect:bienvenida";
+    }
+
     @PostMapping("/ingreso")
     public String ingreso(Model template, HttpSession sesion, @RequestParam("nombreUsuario") String nombreUsuario,
                           @RequestParam("clave") String clave,

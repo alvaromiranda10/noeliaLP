@@ -15,15 +15,16 @@ public class ProductoDAO  {
     @Autowired
     private Environment env;
 
-    private static final String SELECT_PRODUCTO = "SELECT id_producto, p_precio, p_nombre FROM `producto`";
-    private static final String SELECT_PRODUCTO_FOR_TIPO_PRODUCTO = "SELECT id_producto, p_precio, p_nombre FROM `producto` WHERE p_tipo=?";
-    private static final String SELECT_OTROCOLORES_FOR_ID_PRODUCTO = "SELECT o_color, o_foto, o_fotob, o_talleS, o_talleM, o_talleL, o_talleXL FROM otroscolores WHERE id_producto=?";
-    private static final String SELECT_PRODUCTO_FOR_ID_PRODUCTO = "SELECT id_producto, p_precio, p_nombre, p_descripcion FROM `producto` WHERE id_producto=?";
-    private static final String SELECT_PRODUCTO_FOR_TIPO_PRODUCTO_TO_FILTER_COLOR = "SELECT id_producto, p_precio, p_nombre FROM `producto` WHERE p_tipo=?";
-    private static final String SELECT_PRODUCTO_FOR_TIPO_PRODUCTO_TO_FILTER_COLOR_PRECIO = "SELECT id_producto, p_precio, p_nombre FROM `producto` WHERE p_tipo=? AND p_precio BETWEEN ? AND ?";
-    private static final String SELECT_COLORES_FOR_TIPO = "SELECT o_color FROM otroscolores , producto WHERE otroscolores.id_producto =producto.id_producto AND p_tipo = ? GROUP BY o_color";
-    private static final String SELECT_MAX_PRECIO_PRODUCTO="SELECT MAX(p_precio) AS 'maximo' FROM `producto` WHERE p_tipo= ?";
-    private static final String SELECT_GROUP_BY_TIPO="SELECT p_tipo FROM `producto` GROUP BY p_tipo";
+    private static final String SELECT_PRODUCTO = "SELECT id_producto, p_precio, p_nombre FROM public.producto";
+    private static final String SELECT_PRODUCTO_FOR_TIPO_PRODUCTO = "SELECT id_producto, p_precio, p_nombre FROM public.producto WHERE p_tipo=?";
+    private static final String SELECT_OTROCOLORES_FOR_ID_PRODUCTO = "SELECT o_color, o_foto, o_fotob, o_talleS, o_talleM, o_talleL, o_talleXL FROM public.otroscolores WHERE id_producto=?";
+    private static final String SELECT_PRODUCTO_FOR_ID_PRODUCTO = "SELECT id_producto, p_precio, p_nombre, p_descripcion FROM public.producto WHERE id_producto=?";
+    private static final String SELECT_PRODUCTO_FOR_TIPO_PRODUCTO_TO_FILTER_COLOR = "SELECT id_producto, p_precio, p_nombre FROM public.producto WHERE p_tipo=?";
+    private static final String SELECT_PRODUCTO_FOR_TIPO_PRODUCTO_TO_FILTER_COLOR_PRECIO = "SELECT id_producto, p_precio, p_nombre FROM public.producto WHERE p_tipo=? AND p_precio BETWEEN ? AND ?";
+    private static final String SELECT_COLORES_FOR_TIPO = "SELECT o_color FROM public.otroscolores , public.producto WHERE otroscolores.id_producto =producto.id_producto AND p_tipo = ? GROUP BY o_color";
+    private static final String SELECT_MAX_PRECIO_PRODUCTO="SELECT MAX(p_precio) AS maximo FROM public.producto WHERE p_tipo= ?";
+    private static final String SELECT_GROUP_BY_TIPO="SELECT p_tipo FROM public.producto GROUP BY p_tipo";
+
 
     //BLOQUE 0
     public ArrayList listarProductos() {
@@ -146,7 +147,8 @@ public class ProductoDAO  {
             try {
                 Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
                 prs = reg.prepareStatement(SELECT_PRODUCTO_FOR_ID_PRODUCTO);
-                prs.setString(1, (String) idByCategoriaColor.get(i));
+
+                prs.setInt(1, Integer.parseInt(idByCategoriaColor.get(i).toString()));
                 ResultSet rs = prs.executeQuery();
                 while (rs.next()) {
                     Producto a = new Producto();
@@ -214,7 +216,8 @@ public class ProductoDAO  {
 
                 Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
                     prs = reg.prepareStatement(SELECT_id_producto_By_Colores);
-                    prs.setString(1, (String) idByCategoria.get(i));
+
+                    prs.setInt(1, Integer.parseInt(idByCategoria.get(i).toString()));
                     prs.setString(2, color[j]);
                     res = prs.executeQuery();
                     if (res.next()) {
@@ -251,7 +254,7 @@ public class ProductoDAO  {
             try {
                 Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
                 prs = reg.prepareStatement(SELECT_PRODUCTO_FOR_ID_PRODUCTO);
-                prs.setString(1, (String) idByCategoriaColor.get(i));
+                prs.setInt(1, Integer.parseInt(idByCategoriaColor.get(i).toString()));
                 ResultSet rs = prs.executeQuery();
                 while (rs.next()) {
                     Producto a = new Producto();
@@ -288,8 +291,8 @@ public class ProductoDAO  {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
             prs = reg.prepareStatement(SELECT_PRODUCTO_FOR_TIPO_PRODUCTO_TO_FILTER_COLOR_PRECIO);
             prs.setString(1, categoria);
-            prs.setString(2, algo[0]);
-            prs.setString(3, algo[1]);
+            prs.setInt(2, Integer.parseInt(algo[0]));
+            prs.setInt(3, Integer.parseInt(algo[1]) );
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
                 resultado.add(rs.getString("id_producto"));
@@ -316,7 +319,8 @@ public class ProductoDAO  {
             try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
                 prs = reg.prepareStatement(SELECT_PRODUCTO_FOR_ID_PRODUCTO);
-                prs.setString(1, (String) idByCategoria.get(i));
+
+                prs.setInt(1, Integer.parseInt(idByCategoria.get(i).toString()));
                 ResultSet rs = prs.executeQuery();
                 while (rs.next()) {
                     Producto a = new Producto();
@@ -383,7 +387,7 @@ public class ProductoDAO  {
         try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
             prs = reg.prepareStatement(SELECT_PRODUCTO_FOR_ID_PRODUCTO);
-            prs.setString(1, s);
+            prs.setInt(1, Integer.parseInt(s));
             ResultSet rs = prs.executeQuery();
 
             while (rs.next()) {

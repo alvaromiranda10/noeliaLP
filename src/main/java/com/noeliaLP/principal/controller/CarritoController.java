@@ -86,8 +86,8 @@ public class CarritoController {
         return "redirect:inicio?producto="+idProducto+"&cantidad="+cantidad+"&color="+color+"&talle="+talle;
     }
 
-    @DeleteMapping("/carrito/{idCompra}")
-    public String eliminarProductoDelCarrito(@PathVariable("idCompra") String id){
+    @DeleteMapping("/carrito")
+    public String eliminarProductoDelCarrito( @RequestParam(name = "idCompra") String id){
 
         return cbean.eliminarCompra(id);
     }

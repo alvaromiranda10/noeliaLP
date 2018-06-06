@@ -15,7 +15,7 @@ public class UsuarioDAO {
     @Autowired
     private Environment env;
 
-    private static final String INSERT_USUARIO = "INSERT INTO `usuario` ( `u_mail`, `u_nombreUsuario`, `u_clave`, `u_tipo`) VALUES (?,?,?,?)";
+    private static final String INSERT_USUARIO = "INSERT INTO public.usuario ( u_mail, u_nombreusuario, u_clave, u_tipo) VALUES (?,?,?,?);";
 
     public String registrar(Cliente c) {
         PreparedStatement prs = null;
@@ -41,7 +41,7 @@ public class UsuarioDAO {
 
     }
 
-    private static final String SELECT_USUARIO = "SELECT u_id, u_nombreUsuario FROM `usuario` WHERE u_nombreUsuario = ? AND u_clave = ?;";
+    private static final String SELECT_USUARIO = "SELECT u_id, u_nombreusuario FROM public.usuario WHERE u_nombreusuario = ? AND u_clave = ?;";
 
     public String ingresar(HttpSession sesion, Cliente c) {
 
@@ -55,7 +55,7 @@ public class UsuarioDAO {
 
             ResultSet rs = prs.executeQuery();
             if (rs.next()) {
-                this.getSesion(sesion, rs.getString("u_id"),rs.getString("u_nombreUsuario"));
+                this.getSesion(sesion, rs.getString("u_id"),rs.getString("u_nombreusuario"));
                 respuesta = "Exito";
             } else {
                 respuesta = "La clave o el usuario no existe o es incorrecto";
@@ -79,9 +79,9 @@ public class UsuarioDAO {
 
         try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
-            PreparedStatement consulta = reg.prepareStatement("UPDATE `usuario` SET activo = ? WHERE u_id = ?");
+            PreparedStatement consulta = reg.prepareStatement("UPDATE public.usuario SET activo = ? WHERE u_id = ?");
             consulta.setString(1, codigo);
-            consulta.setString(2, u_id);
+            consulta.setInt(2, Integer.parseInt(u_id));
             consulta.executeUpdate();
 
             consulta.close();
@@ -101,7 +101,7 @@ public class UsuarioDAO {
 
             try {
                 Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
-                PreparedStatement consulta = reg.prepareStatement("SELECT * FROM  `usuario`  WHERE activo = ?;");
+                PreparedStatement consulta = reg.prepareStatement("SELECT * FROM  public.usuario  WHERE activo = ?;");
                 consulta.setString(1, codigo);
                 ResultSet rs = consulta.executeQuery();
                 if (rs.next()) {
@@ -131,7 +131,7 @@ public class UsuarioDAO {
         sesion.removeAttribute("u_nombreUsuario");
         try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
-            PreparedStatement consulta = reg.prepareStatement("UPDATE `usuario` SET activo = NULL WHERE activo = ?;");
+            PreparedStatement consulta = reg.prepareStatement("UPDATE public.usuario SET activo = NULL WHERE activo = ?;");
             consulta.setString(1, codigo);
             consulta.executeUpdate();
 

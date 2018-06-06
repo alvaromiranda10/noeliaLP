@@ -15,9 +15,9 @@ public class CarritoDAO implements com.noeliaLP.principal.interfaces.CarritoDAO 
     @Autowired
     private Environment env;
 
-    private static final String INSERT_CARRITO_FOR_ID = "INSERT INTO carrito (id_usuario, id_producto, c_talle, c_cantidad, c_color) VALUES (?,?,?,?,?)";
-    private static final String SELECT_CARRITO_FOR_USER = "SELECT c.id_carrito, p.p_nombre, p.p_precio, c.c_color, c.c_cantidad, c.c_talle , o.o_foto FROM carrito c, producto p, otroscolores o WHERE c.id_producto= p.id_producto AND o.o_color = c.c_color AND o.id_producto = p.id_producto AND c.id_usuario =?;";
-    private static final String ELIMINAR_COMPRA_POR_ID_CARRITO = "DELETE FROM carrito WHERE id_carrito = ?";
+    private static final String INSERT_CARRITO_FOR_ID = "INSERT INTO public.carrito (id_usuario, id_producto, c_talle, c_cantidad, c_color) VALUES (?,?,?,?,?)";
+    private static final String SELECT_CARRITO_FOR_USER = "SELECT c.id_carrito, p.p_nombre, p.p_precio, c.c_color, c.c_cantidad, c.c_talle , o.o_foto FROM public.carrito c, public.producto p, public.otroscolores o WHERE c.id_producto= p.id_producto AND o.o_color = c.c_color AND o.id_producto = p.id_producto AND c.id_usuario =?;";
+    private static final String ELIMINAR_COMPRA_POR_ID_CARRITO = "DELETE FROM public.carrito WHERE id_carrito = ?";
 
 
     //  CarritoCompras.java
@@ -29,8 +29,8 @@ public class CarritoDAO implements com.noeliaLP.principal.interfaces.CarritoDAO 
         try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
             prs = reg.prepareStatement(INSERT_CARRITO_FOR_ID);
-            prs.setString(1, a.getIdUsuario());
-            prs.setString(2, a.getIdProducto());
+            prs.setInt(1, Integer.parseInt(a.getIdUsuario()));
+            prs.setInt(2, Integer.parseInt(a.getIdProducto()));
             prs.setString(3, a.getTalle());
             prs.setString(4, a.getCantidad());
             prs.setString(5, a.getColor());
@@ -57,7 +57,7 @@ public class CarritoDAO implements com.noeliaLP.principal.interfaces.CarritoDAO 
         try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
             prs = reg.prepareStatement(ELIMINAR_COMPRA_POR_ID_CARRITO);
-            prs.setString(1, id);
+            prs.setInt(1, Integer.parseInt(id));
             prs.executeUpdate();
 
             prs.close();
@@ -73,12 +73,15 @@ public class CarritoDAO implements com.noeliaLP.principal.interfaces.CarritoDAO 
     @Override
     public ArrayList listarCompras(String id) {
 
+        if(id.equals("")){
+            id = "0";
+        }
         PreparedStatement prs = null;
         ArrayList<HashMap<String, String>> resultado = new ArrayList<>();
         try {
             Connection reg = DriverManager.getConnection(env.getProperty("spring.datasource.url"),env.getProperty("spring.datasource.username"),env.getProperty("spring.datasource.password"));
             prs = reg.prepareStatement(SELECT_CARRITO_FOR_USER);
-            prs.setString(1, id);
+            prs.setInt(1, Integer.parseInt(id));
 
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
