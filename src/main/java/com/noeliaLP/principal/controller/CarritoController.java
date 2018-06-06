@@ -88,6 +88,7 @@ public class CarritoController {
     }
 
     @DeleteMapping("/carrito")
+    @ResponseBody
     public String eliminarProductoDelCarrito( @RequestParam(name = "idCompra") String id){
 
         return cbean.eliminarCompra(id);
