@@ -1,0 +1,87 @@
+<th:block th:fragment="galeria">
+    <div class="row">
+
+        <!--BLOQUE DE ITERACION PRODUCTOS-->
+        <th:block th:each="producto :${productos}" >
+
+            <article class="galeria-img col-lg-3">
+
+                <div class="container-article">
+                    <div class="hover-img">
+
+                        <!--             BLOQUE DE ITERACION FOTOS -->
+                        <th:block th:each="colores, clave :${producto.otrosColores}" th:if="${clave.index}<1 ">
+                            <div class="frente">
+                                <img th:src="'./imagenesLucio/productos/'+${colores.foto}" th:data-value="${producto.id}" alt="">
+                            </div>
+                            <div class="atras" th:if="${colores.fotob != null}">
+                                <img th:src="'./imagenesLucio/productos/'+${colores.fotob}" th:data-value="${producto.id}" alt="">
+                            </div>
+                        </th:block>
+                        <!--             FIN- BLOQUE DE ITERACION FOTOS-->
+                    </div>
+                    <div class="detallePedido">
+                        <h4>
+                            <!--<a th:href="@{'/detalleProducto/'+ ${producto.id}}"  th:text="${producto.nombre}">nombre vestido</a>-->
+                            <a th:href="@{./detalleProducto(producto=${producto.id})}"  th:text="${producto.nombre}">nombre vestido</a>
+                        </h4>
+                        <h5 th:text="'$'+${producto.precio}">precio</h5>
+                        <ul class="colores">
+                            <!-- BLOQUE DE ITEREACION DE COLORES-->
+                            <th:block th:each="colores :${producto.otrosColores}">
+                                <li>
+                                    <input th:name="'colores'+${producto.id}" type="radio" th:id="${colores.color}+${producto.id}">
+                                    <label th:for="${colores.color}+${producto.id}" th:style="'background:'+ ${colores.color}+';'"></label>
+                                </li>
+                            </th:block>
+                            <!--FIN - BLOQUE DE ITEREACION DE COLORES-->
+                        </ul>
+                    </div>
+                </div>
+            </article>
+        </th:block>
+         <!--fin- BLOQUE DE ITERACION PRODUCTOS-->
+    </div>
+
+    <div class="row row2">
+
+        <th:block th:each="producto :${productos}" >
+            <article class="slider-img col-sm-4 col-xs-6">
+                <div class="container-article">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <!--             BLOQUE DE ITERACION FOTOS -->
+                            <th:block th:each="colores, clave :${producto.otrosColores}" th:if="${clave.index}<1 ">
+                                <div class="swiper-slide">
+                                    <img th:src="'./imagenesLucio/productos/'+${colores.foto}" th:data-value="${producto.id}" alt=""></img>
+                                </div>
+                                <div class="swiper-slide" th:if="${colores.fotob != null}">
+                                    <img th:src="'./imagenesLucio/productos/'+${colores.fotob}" th:data-value="${producto.id}" alt=""></img>
+                                </div>
+                            </th:block>
+                            <!--             FIN- BLOQUE DE ITERACION FOTOS-->
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="detallePedido">
+                        <h4>
+                            <!--<a th:href="@{'/detalleProducto/'+ ${producto.id}}"  th:text="${producto.nombre}">nombre vestido</a>-->
+                            <a th:href="@{./detalleProducto(producto=${producto.id})}"  th:text="${producto.nombre}">nombre vestido</a>
+                        </h4>
+                        <h5 th:text="'$'+${producto.precio}">precio</h5>
+                        <ul class="colores">
+                            <!-- BLOQUE DE ITEREACION DE COLORES-->
+                            <th:block th:each="colores :${producto.otrosColores}">
+                                <li>
+                                    <input th:name="'colores'+${producto.id}" type="radio" th:id="${colores.color}+${producto.id}">
+                                    <label th:for="${colores.color}+${producto.id}" th:style="'background:'+ ${colores.color}+';'"></label>
+                                </li>
+                            </th:block>
+                            <!--FIN - BLOQUE DE ITEREACION DE COLORES-->
+                        </ul>
+                    </div>
+                </div>
+            </article>
+        </th:block>
+    </div>
+</th:block>
