@@ -74,6 +74,7 @@ public class CarritoController {
         if(activo){
             id = sesion.getAttribute("u_id").toString();
 
+            cmodel.setIdUsuario(id);
             cmodel.setIdProducto(idProducto);
             cmodel.setCantidad(cantidad);
             cmodel.setColor(color);
